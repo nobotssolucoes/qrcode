@@ -1,3 +1,4 @@
+
 let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 scanner.addListener('scan', function (content) {
     document.getElementById('result').textContent = 'QR Code Detectado: ' + content;

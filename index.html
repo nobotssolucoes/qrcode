@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -7,8 +8,14 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Leitor de QR Code</h1>
-    <video id="preview"></video>
+    <div class="camera-container">
+        <video id="preview"></video>
+        <div class="overlay">
+            <div class="scan-area">
+                <div class="scan-line"></div>
+            </div>
+        </div>
+    </div>
     <p id="result"></p>
 
     <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
