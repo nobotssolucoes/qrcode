@@ -20,6 +20,9 @@ Instascan.Camera.getCameras().then(function (availableCameras) {
 function startCamera(camera) {
     scanner.start(camera).then(function(s) {
         stream = s;
+        // Aplica inversão no vídeo
+        const videoElement = document.getElementById('preview');
+        videoElement.style.transform = 'scaleX(-1)';
     });
 }
 
