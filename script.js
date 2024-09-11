@@ -1,42 +1,42 @@
-const codeReader = new ZXing.BrowserMultiFormatReader();
 let selectedDeviceId;
 let cameras = [];
 let activeCameraIndex = 0;
 
-// Função para listar as câmeras disponíveis e iniciar a leitura
-function startCamera() {
-    codeReader.getVideoInputDevices().then((videoInputDevices) => {
-        cameras = videoInputDevices;
+// Verifica se o navegador suporta o acesso à câmera
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // Função para abrir a câmera e mostrar o vídeo
+    function startCamera(deviceId) {
+        navigator.mediaDevices.getUserMedia({ video: { deviceId: deviceId ? { exact: deviceId } : undefined } })
+        .then(function(stream) {
+            // Exibe o vídeo da câmera no elemento de vídeo
+            const video = document.getElementById('preview');
+            video.srcObject = stream;
+            video.play();
+        })
+        .catch(function(err) {
+            console.error("Erro ao acessar a câmera: ", err);
+        });
+    }
 
+    // Obtém a lista de câmeras e inicia a primeira câmera
+    navigator.mediaDevices.enumerateDevices()
+    .then(function(devices) {
+        cameras = devices.filter(device => device.kind === 'videoinput');
         if (cameras.length > 0) {
-            selectedDeviceId = cameras[activeCameraIndex].deviceId;
-            startDecoding(selectedDeviceId);
+            selectedDeviceId = cameras[0].deviceId; // Seleciona a primeira câmera
+            startCamera(selectedDeviceId);
         } else {
-            alert('Nenhuma câmera encontrada.');
-        }
-    }).catch((err) => {
-        console.error(err);
-    });
-}
-
-// Função para iniciar a decodificação do vídeo
-function startDecoding(deviceId) {
-    codeReader.decodeFromVideoDevice(deviceId, 'preview', (result, err) => {
-        if (result) {
-            document.getElementById('result').textContent = `Código detectado: ${result.text}`;
-        }
-        if (err && !(err instanceof ZXing.NotFoundException)) {
-            console.error(err);
+            console.error("Nenhuma câmera encontrada.");
         }
     });
+
+    // Alterna entre câmeras (frontal/traseira)
+    document.getElementById('switch-camera').addEventListener('click', function() {
+        activeCameraIndex = (activeCameraIndex + 1) % cameras.length; // Alterna entre as câmeras
+        selectedDeviceId = cameras[activeCameraIndex].deviceId;
+        startCamera(selectedDeviceId); // Reinicia a câmera com o novo ID
+    });
+
+} else {
+    console.error("Navegador não suporta o acesso à câmera.");
 }
-
-// Função para alternar entre câmeras (frontal/traseira)
-document.getElementById('switch-camera').addEventListener('click', function() {
-    activeCameraIndex = (activeCameraIndex + 1) % cameras.length;
-    codeReader.reset(); // Reseta o decodificador antes de alternar
-    startDecoding(cameras[activeCameraIndex].deviceId);
-});
-
-// Inicia a câmera ao carregar a página
-window.addEventListener('load', startCamera);

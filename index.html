@@ -8,7 +8,8 @@
 </head>
 <body>
     <div class="camera-container">
-        <video id="preview"></video>
+        <!-- Elemento de vídeo para exibir a câmera -->
+        <video id="preview" autoplay playsinline></video>
         <div class="overlay">
             <div class="scan-area">
                 <div class="scan-line"></div>
@@ -16,17 +17,17 @@
         </div>
     </div>
 
-    <!-- Botão para alternar câmera -->
+    <!-- Botão para alternar entre as câmeras -->
     <div class="controls">
         <button id="switch-camera">
             <img src="https://xrjtjebxxpctygsnjcnr.supabase.co/storage/v1/object/public/icones/switch-camera.svg?t=2024-09-11T13%3A59%3A26.701Z" alt="Alternar Câmera" id="camera-icon">
         </button>
     </div>
 
+    <!-- Elemento para mostrar o código lido -->
     <p id="result"></p>
 
-    <!-- Importa a biblioteca ZXing para leitura de múltiplos tipos de códigos -->
-    <script src="https://unpkg.com/@zxing/library@latest"></script>
+    <!-- Script para integrar a câmera -->
     <script src="script.js"></script>
 </body>
 </html>
