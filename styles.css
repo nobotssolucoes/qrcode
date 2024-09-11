@@ -68,7 +68,6 @@ video {
     animation: move-line 2s infinite;
 }
 
-
 @keyframes move-line {
     0% {
         top: 0;
