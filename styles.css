@@ -33,7 +33,6 @@ video {
     position: absolute;
     top: 0;
     left: 0;
-    transform: scaleX(-1); /* Sempre inverter o vídeo */
 }
 
 .overlay {
@@ -88,65 +87,30 @@ video {
 
 .controls {
     position: absolute;
-    bottom: 10%;
+    bottom: 50px;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 15px;
+    justify-content: center;
+    width: 100%;
 }
 
 button {
-    padding: 12px;
+    padding: 16px;
     cursor: pointer;
     border: none;
     background-color: rgba(0, 0, 0, 0.5); /* Fundo preto com 50% de opacidade */
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 button img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
 }
 
 button:hover {
     background-color: rgba(0, 0, 0, 0.7);
-}
-
-@media (max-width: 768px) {
-    .scan-area {
-        width: 90%;
-        height: 35%;
-    }
-
-    button {
-        width: 50px;
-        height: 50px;
-    }
-
-    button img {
-        width: 24px;
-        height: 24px;
-    }
-}
-
-@media (max-width: 480px) {
-    .scan-area {
-        width: 95%;
-        height: 30%;
-    }
-
-    button {
-        width: 40px;
-        height: 40px;
-    }
-
-    button img {
-        width: 20px;
-        height: 20px;
-    }
 }

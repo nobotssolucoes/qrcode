@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leitor de QR Code</title>
+    <title>Leitor de QR Code e Código de Barras</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,19 +16,17 @@
         </div>
     </div>
 
-    <!-- Botões para alternar câmera e acionar flash -->
+    <!-- Botão para alternar câmera -->
     <div class="controls">
         <button id="switch-camera">
             <img src="https://xrjtjebxxpctygsnjcnr.supabase.co/storage/v1/object/public/icones/switch-camera.svg?t=2024-09-11T13%3A59%3A26.701Z" alt="Alternar Câmera" id="camera-icon">
-        </button>
-        <button id="toggle-flash">
-            <img src="https://xrjtjebxxpctygsnjcnr.supabase.co/storage/v1/object/public/icones/flash-off.svg?t=2024-09-11T13%3A21%3A26.071Z" alt="Flash" id="flash-icon">
         </button>
     </div>
 
     <p id="result"></p>
 
-    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <!-- Importa a biblioteca ZXing para leitura de múltiplos tipos de códigos -->
+    <script src="https://unpkg.com/@zxing/library@latest"></script>
     <script src="script.js"></script>
 </body>
 </html>
