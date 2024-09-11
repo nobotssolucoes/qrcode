@@ -30,7 +30,7 @@ function startCamera(camera) {
         } else {
             // Câmera traseira: não aplicar espelhamento e ativar flash
             videoElement.style.transform = 'none';
-            enableFlashButton();   // Habilita o botão de flash para câmeras traseiras
+            checkFlashSupport();   // Verifica se a câmera traseira suporta o flash
         }
     });
 }
@@ -51,6 +51,21 @@ function enableFlashButton() {
 function disableFlashButton() {
     const flashButton = document.getElementById('toggle-flash');
     flashButton.disabled = true;
+}
+
+// Verifica se o dispositivo suporta flash
+function checkFlashSupport() {
+    if (stream) {
+        let track = stream.getVideoTracks()[0];
+        let capabilities = track.getCapabilities();
+
+        if (capabilities.torch) {
+            enableFlashButton(); // Habilita o controle de flash se suportado
+        } else {
+            disableFlashButton(); // Desabilita o controle de flash se não for suportado
+            alert('Este dispositivo não suporta o uso de flash.');
+        }
+    }
 }
 
 // Função para ativar/desativar o flash
