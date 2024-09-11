@@ -2,6 +2,7 @@ let scanner = new Instascan.Scanner({ video: document.getElementById('preview') 
 let cameras = [];
 let activeCameraIndex = 0;
 let stream;
+let flashOn = false;
 
 // Inicializa as câmeras
 Instascan.Camera.getCameras().then(function (availableCameras) {
@@ -19,28 +20,14 @@ Instascan.Camera.getCameras().then(function (availableCameras) {
 function startCamera(camera) {
     scanner.start(camera).then(function(s) {
         stream = s;
-        adjustVideoForCamera(camera);
     });
 }
 
-// Função para alternar entre as câmeras
+// Alterna entre câmera frontal e traseira
 document.getElementById('switch-camera').addEventListener('click', function() {
     activeCameraIndex = (activeCameraIndex + 1) % cameras.length;
     startCamera(cameras[activeCameraIndex]);
 });
-
-// Ajusta o vídeo para espelhar ou não, dependendo da câmera
-function adjustVideoForCamera(camera) {
-    const videoElement = document.getElementById('preview');
-    
-    if (camera.name.includes('back')) {
-        // Câmera traseira: remover espelhamento
-        videoElement.style.transform = 'none';
-    } else {
-        // Câmera frontal: aplicar espelhamento
-        videoElement.style.transform = 'scaleX(-1)';
-    }
-}
 
 // Função para ativar/desativar o flash
 document.getElementById('toggle-flash').addEventListener('click', function() {
@@ -55,9 +42,10 @@ document.getElementById('toggle-flash').addEventListener('click', function() {
             track.applyConstraints({
                 advanced: [{torch: !torchStatus}]
             });
+            flashOn = !flashOn; // Atualiza o status do flash
 
             // Alterna entre os ícones de flash
-            if (!torchStatus) {
+            if (flashOn) {
                 flashIcon.src = 'https://xrjtjebxxpctygsnjcnr.supabase.co/storage/v1/object/public/icones/flash-on.svg?t=2024-09-11T13%3A21%3A08.716Z';
             } else {
                 flashIcon.src = 'https://xrjtjebxxpctygsnjcnr.supabase.co/storage/v1/object/public/icones/flash-off.svg?t=2024-09-11T13%3A21%3A26.071Z';
